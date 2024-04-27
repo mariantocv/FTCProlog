@@ -1,0 +1,11 @@
+%Example from the reference:
+%Cárdenas-Viedma, M.A.; Marín, R. FTCLogic: Fuzzy Temporal Constraint Logic. Fuzzy Set and Systems 2019, DOI: 10.1016/j.fss.2018.05.014, 363, 84-112. 
+
+
+alarm(present,alarm) ; ('0:0:0 hours',alarm,(0,0,0,0) minutes).
+murder(present,murder).
+police(present,police).
+time ; (alarm,murder,(9,11,13,15) minutes).
+
+%Query:
+%c: alarm(present,alarm),murder(present,murder),police(present,police),time ; (alarm,murder,(5,5,15,15) minutes),(alarm,police,(13,14,16,17) minutes),(murder,police,(-2,-1,11,12) minutes).

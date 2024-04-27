@@ -1,0 +1,86 @@
+/* Temporal pattern for a typical product. */ 
+standard_product(ID) :- published(ID,PUB), number_visits_reached(ID,yes,REACH), peak(ID,PEAK), time(ID) ;
+(PUB,REACH, '12 hours before'),
+(PUB,PEAK, 'approximately 3 days before').
+
+% Facts prod1
+published(prod1,pub1).
+number_visits_reached(prod1,yes,reach1).
+peak(prod1,peak1).
+
+% Temporal constraints detected among the previous facts
+time(prod1) ;
+(PUB=pub1,REACH=reach1, '12 hours before'),
+(PUB=pub1,PEAK=peak1, 'approximately 3 days before').
+
+% Facts prod2
+published(prod2,pub2).
+number_visits_reached(prod2,yes,reach2).
+peak(prod2,peak2).
+
+% Temporal constraints detected among the previous facts
+time(prod2) ;
+(PUB=pub2,REACH=reach2, (12,12,12,12) hours),
+(PUB=pub2,PEAK=peak2, (0,2,4,6) days).
+
+% Facts prod3
+published(prod3,pub3).
+number_visits_reached(prod3,yes,reach3).
+peak(prod3,peak3).
+
+% Temporal constraints detected among the previous facts
+time(prod3) ;
+(PUB=pub3,REACH=reach3, 'approximately 12 hours before'), % (9,11,13,15) hours
+(PUB=pub3,PEAK=peak3, (0,2,4,6) days).
+
+% Facts prod4
+published(prod4,pub4).
+number_visits_reached(prod4,yes,reach4).
+peak(prod4,peak4).
+
+% Temporal constraints detected among the previous facts
+time(prod4) ;
+(PUB=pub4,REACH=reach4, (9,11,13,15) hours),
+(PUB=pub4,PEAK=peak4, (1,2,4,5) days).
+
+% Facts prod5
+published(prod5,pub5).
+number_visits_reached(prod5,yes,reach5).
+peak(prod5,peak5).
+
+% Temporal constraints detected among the previous facts
+time(prod5) ;
+(PUB=pub5,REACH=reach5, (1,2,20,30) hours),
+(PUB=pub5,PEAK=peak5, (1,2,4,5) days).
+
+% Facts prod6
+published(prod6,pub6).
+number_visits_reached(prod6,yes,reach6).
+peak(prod6,peak6).
+
+% Temporal constraints detected among the previous facts
+time(prod6) ;
+(PUB=pub6,REACH=reach6, (1,2,20,30) hours),
+(PUB=pub6,PEAK=peak6, (2,2.5,3,3.5) days).
+
+% Facts prod7
+published(prod7,pub7).
+number_visits_reached(prod7,yes,reach7).
+peak(prod7,peak7).
+
+% Temporal constraints detected among the previous facts
+time(prod7) ;
+(PUB=pub7,REACH=reach7, (10,11,12,13) hours),
+(PUB=pub7,PEAK=peak7, (5,6,7,8) days).
+ 
+% Facts prod8
+published(prod8,pub8).
+number_visits_reached(prod8,no,reach8).
+peak(prod8,peak8).
+
+% Temporal constraints detected among the previous facts
+time(prod8) ;
+(PUB=pub8,REACH=reach8, (12,12,12,12) hours),
+(PUB=pub8,PEAK=peak8, (0,2,4,6) days).
+
+

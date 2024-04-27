@@ -1,0 +1,41 @@
+/* IRAS pattern */
+
+% X presents IRAS (healthcare-associated infections) if they have an infection 3 or more days after admisyeson and did not have it upon admission.
+
+iras(X,yes,Tiras) :- infection(X,yes,B,Tinf1), infection(X,no,B,Tinf2), admission(X,Ting), time(X) ;
+                       (Ting,Tinf1,'more than approximately 3 days before'),
+                       (Ting,Tinf2,'approximately equal days'),
+                       (Tiras,Tinf1,'approximately equal days').
+/* IRAS outbreak */
+
+% Two or more cases of IRAS by the same microorganism and with spatiotemporal association
+
+brote_iras(X,Y) :- iras(X,yes,TirasX),iras(Y,yes,TirasY),time(X,Y);
+ (TirasX, TirasY,'approximately equal days').
+
+/* Facts base */
+
+infection(juan,yes,streptococcus,tinfJ1).
+infection(juan,no,streptococcus,tinfJ2).
+admission(juan,tingJ).
+%iras(juan,NS,tirasJ).
+
+infection(manolo,yes,streptococcus,tinfM1).
+infection(manolo,no,streptococcus,tinfM2).
+admission(manolo,tingM).
+%iras(manolo,NS,tirasM).
+
+time(juan);
+ (Ting=tingJ,Tinf1=tinfJ1,(3,3,3,3) days),
+ (Ting=tingJ,Tinf2=tinfJ2,'approximately equal days'),
+ (Tiras=tirasJ,Tinf1=tinfJ1,'approximately equal days').
+
+time(manolo);
+ (Ting=tingM,Tinf1=tinfM1,(4,4,4,4) days),
+ (Ting=tingM,Tinf2=tinfM2,'approximately equal days'),
+ (Tiras=tirasM,Tinf1=tinfM1,'approximately equal days').
+
+
+time(juan,manolo);
+ (Tinf1=tirasJ1, Tinf1=tinfM1,'approximately equal days').
+

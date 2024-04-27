@@ -1,0 +1,35 @@
+/* Example close contact */
+
+
+%RULES
+
+confirmed_case (P, VIRUS, T_CC):- pdia(P, VIRUS, positive, T_PDIA);
+(T_CC, T_PDIA, 'equal minutes or after'). 
+
+close_contact(P1, P2, VIRUS, T_CONT) :- 
+confirmed_case (P1, VIRUS, T_CC), 
+start_sym(P1,VIRUS,T_SS) , 
+contact(P1, P2, T_CONT),time;
+(T_CONT, T_CC, 'before or equal seconds or after'),  
+(T_CONT, T_SS,  'approximately 3 days before or approximately 7 days after').
+
+
+%FACTS
+
+pdia(john, covid, positive,t_pdia_john);
+(origin, T_PDIA=t_pdia_john, 'equal seconds'). % 15-11-2022
+ 
+start_sym(john,covid,t_sym_john);
+(origin, T_SS=t_sym_john, 'approximately 4 days after').
+
+contact(john, louis, t_cont_jl);
+(origin, T_CONT=t_cont_jl, '5 days after').
+
+contact(john, peter, t_cont_jp);
+(origin, T_CONT=t_cont_jp, '10 days after').
+
+
+%--------------------------- All
+time;
+(origin, ('2022-11-15T00:00:00','2022-11-15T00:00:00','2022-11-15T00:00:00','2022-11-15T00:00:00')),
+(origin,today,'112 days before'). %% 'today' is March 7th, 2023.

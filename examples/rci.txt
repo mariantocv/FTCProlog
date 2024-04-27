@@ -1,0 +1,27 @@
+%Example from the reference:
+%Cárdenas-Viedma, M.A.; Marín, R. FTCLogic: Fuzzy Temporal Constraint Logic. Fuzzy Set and Systems 2019, DOI: 10.1016/j.fss.2018.05.014, 363, 84-112. 
+
+/* Pattern for RCI */ 
+rci(present,rci,X) :- pain(present,pain,X), tachycardia(present,tach,X),crepitants(present,crep,X), cyanosis(present,cyan,X), time(X) ;
+                       (pain,cyan,(-5,-5,40,40) minutes),
+                       (pain,crep,(-10,-10,30,30) minutes),
+                       (pain,tach,(-15,-15,20,20) minutes),
+                       (crep,cyan,(-15,-15,30,30) minutes),
+                       (tach,cyan,(-5,-5,35,35) minutes),
+		       (tach,crep,(-10,-10,25,25) minutes),
+                       (rci,pain,(0,0,20,20) minutes),
+		       (rci,cyan,(15,15,40,40) minutes),
+                       (rci,crep,(10,10,30,30) minutes),
+                       (rci,tach,(5,5,20,20) minutes).
+
+% Facts associated with the symptoms detected in patient Juan
+pain(present,pain,juan).
+cyanosis(present,cyan,juan).
+crepitants(present,crep,juan).
+tachycardia(present,tach,juan).
+
+% Temporal constraints detected among the previous facts
+time(juan) ; (pain,cyan,(12,14,16,18) minutes),
+       	     (cyan,crep,(3,4,6,7) minutes),
+             (crep,tach,(0,1,3,4) minutes).
+

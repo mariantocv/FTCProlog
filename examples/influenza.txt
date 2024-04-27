@@ -1,0 +1,103 @@
+%Example from the reference:
+%Cárdenas-Viedma, M.A.; Galindo-Navarro, F.M. PROLogic: A FUZZY TEMPORAL CONSTRAINT PROLOG. International Journal of Applied Mathematics 2019, DOI: 10.12732/ijam.v32i4.10, 32, 4, 677-719. 
+
+/* Avian influenza scenario */
+
+avianInfluenza(yes,GA,X) :- begFever(yes,CF,X),endFever(yes,FF,X), begDyspnoea(yes,CD,X),endDyspnoea(yes,FD,X),                    
+begPneumonia(yes,CN,X), endPneumonia(yes,FN,X), admHosp(yes,IH,X),died(yes,M,X), time(X);
+                       (CF,CD,(1,5,5,16) days),
+                       (CF,CN,(3,7,7,17) days),
+                       (CN,IH,'before'),
+                       (FN,IH,'after'),
+                       (CF,M,(6,6,30,30) days).
+
+
+/* The origin of times is the same in all networks to avoid inconsistencies. */
+
+% Facts related to the girl
+exposureChicken(yes,np1,girl).
+begFever(yes,ni1b,girl).
+endFever(yes,ni1e,girl).
+admLocalHosp(yes,np2,girl).
+admHosp(yes,np3,girl).
+died(yes,np4,girl).
+
+
+%  Constraints between the facts related to the girl
+time(girl) ; (origin,('2004-09-02T00:00:00','2004-09-02T00:00:00','2004-09-02T23:59:59','2004-09-02T23:59:59')),
+       (CP=np1,CF=ni1b, (60,72,96,108) hours),
+       (CF=ni1b,origin,'approximately equal hours'),
+       (CF=ni1b,FF=ni1e,'before'),
+       (origin,IHL=np2, 'approximately 5 days before'),
+       (IHL=np2, CF=ni1b, 'after'),
+       (IHL=np2, FF=ni1e, 'before'),
+       (IHL=np2,IH=np3, 'approximately 1 days before'),
+       (IH=np3,M=np4, (2,3,3,4) hours).
+
+
+%Facts related to the aunt
+exposureChicken(yes,tp1,aunt).
+startCare(yes,ti1b,aunt).
+endCare(yes,ti1e,aunt).		
+begFever(yes,ti3b,aunt).
+endFever(yes,ti3e,aunt).
+begPneumonia(yes,ti4b,aunt).
+endPneumonia(yes,ti4e,aunt).
+admHosp(yes,tp2,aunt).
+discharged(yes,tp3,aunt).
+
+
+% Constraints between the facts related to the aunt
+time(aunt) ; 
+(origin,('2004-09-02T00:00:00','2004-09-02T00:00:00','2004-09-02T23:59:59','2004-09-02T23:59:59')),
+       (CP=tp1,origin,(3,3,3,3) days),
+       (CC=ti1b,FC=ti1e, (12,12,13,13) hours),
+       (origin,CC=ti1b, 'approximately 5 days before'),
+       (origin,CF=ti3b,'approximately 14 days before'),
+       (CF=ti3b,FF=ti3e,'before'),
+       (CF=ti3b, CN=ti4b,'approximately 7 days before'),
+       (CN=ti4b,FN=ti4e,'before'),
+       (origin,IH=tp2,(21,21,21,21) days),
+       (CF=ti3b,IH=tp2,'before'), 
+       (origin,AM=tp3,'35 days before'). 
+
+% Facts related to the mother
+startTrip(yes,mi1b,mother).
+startCare(yes,mi3b,mother).
+endCare(yes,mi3e,mother).
+begFever(yes,mi5b,mother).
+endFever(yes,mi5e,mother).
+begPneumonia(yes,mi8b,mother).
+endPneumonia(yes,mi8e,mother).
+begDyspnoea(yes,mi9b,mother).
+endDyspnoea(yes,mi9e,mother).
+admHosp(yes,mp1,mother).
+died(yes,mp2,mother).
+				
+% Constraints between the facts related to the  mother
+time(mother) ; 
+(origin,('2004-09-02T00:00:00','2004-09-02T00:00:00','2004-09-02T23:59:59','2004-09-02T23:59:59')),
+       (origin,CVH=mi1b,'approximately 5 days before'),
+       (CC=mi3b, FC=mi3e, (16,16,18,18) hours),
+       (origin,CF=mi5b, (7,8,9,10) days),
+       (CF=mi5b,FF=mi5e, 'before'),
+       (origin, IH=mp1,'approximately 15 days before'),
+       (CN=mi8b,IH=mp1,'before'),
+       (FN=mi8e,IH=mp1,'after'),
+       (CN=mi8b,FN=mi8e,'before'),
+       (CD=mi9b,IH=mp1,'before'),
+       (FD=mi9e,IH=mp1,'after'),
+       (CD=mi9b,FD=mi9e,'before'),
+       (origin,M=mp2,'19 days before'). 
+
+% Constraints between the events associated with the aunt and those of the mother
+%The care of the aunt and the mother in the hospital overlap:
+time(aunt,mother);
+(origin,('2004-09-02T00:00:00','2004-09-02T00:00:00','2004-09-02T23:59:59','2004-09-02T23:59:59')),
+       (CC=ti1b, CC=mi3b,'before'),
+       (CC=ti1b, FC=mi3e, 'before'),
+       (FC=ti1e, CC=mi3b, 'after'),
+       (FC=ti1e, FC=mi3e, 'before').
+  
+
+
