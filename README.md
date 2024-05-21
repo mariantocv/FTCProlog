@@ -1,7 +1,7 @@
 -- Francisco Manuel Galindo Navarro & María Antonia Cárdenas Viedma
 
--- Esta obra está bajo una licencia Atribución–NoComercial–CompartirIgual 3.0 Spain
-de Creative Commons. Una copia de esta licencia puede encontrarse en https://creativecommons.org/licenses/by-nc-sa/3.0/es/
+-- Esta obra está bajo una licencia Attribution-NonCommercial-ShareAlike 4.0
+de Creative Commons. Una copia de esta licencia puede encontrarse en https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 # To compile:
 # ghc Main.hs -o FTCProlog
